@@ -3,8 +3,10 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -89,7 +91,8 @@ public class ViewList extends HttpServlet {
             out.println("<tbody>");
             if(!clients.isEmpty()){
                 for(Clients client : clients){
-                    Integer id = client.getClientid(); 
+                    Integer id = client.getClientid();
+                    SimpleDateFormat sdf = new SimpleDateFormat();
                     out.println("<tr>");
                     out.println("<td rowspan=" + client.getAdressesList().size() + ">" +  "<a href=\"http://localhost:8080/J200_Lab1/createadress?id=" + id + "\">Create adress</a>" + "</td>");
                     out.println("<td rowspan=" + client.getAdressesList().size() + ">" +  "<a href=\"http://localhost:8080/J200_Lab1/update?id=" + id + "\">Update</a>" + "</td>");
@@ -97,7 +100,7 @@ public class ViewList extends HttpServlet {
                     out.println("<td rowspan=" + client.getAdressesList().size() + ">" + id + "</td>");
                     out.println("<td rowspan=" + client.getAdressesList().size() + ">" + client.getClientname() + "</td>");
                     out.println("<td rowspan=" + client.getAdressesList().size() + ">" + client.getClienttype() + "</td>");
-                    out.println("<td rowspan=" + client.getAdressesList().size() + ">" + client.getRegdate() + "</td>");
+                    out.println("<td rowspan=" + client.getAdressesList().size() + ">" + sdf.format(client.getRegdate()) + "</td>");
                     if(!client.getAdressesList().isEmpty()){
                         for(Adresses adress : client.getAdressesList()){
                             int adressid = adress.getAdressid();
