@@ -6,7 +6,6 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Adresses;
 import models.Clients;
+import parsers.Parser;
 import repositories.ClientService;
 import repositories.AdressService;
 
@@ -30,6 +30,9 @@ public class ViewList extends HttpServlet {
     
     @EJB
     AdressService adressService;
+    
+    @EJB
+    Parser parser;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,6 +49,7 @@ public class ViewList extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         List<Clients> clients = clientService.findAllClients();
+        parser.createXmlFile(clients);
         String text = request.getParameter("search");
         System.out.println(text);
         clients = filterList(clientService.findAllClients(), text);
