@@ -1,6 +1,10 @@
 package repositories;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -36,9 +40,9 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     @Override
     public Integer saveClient(Clients client) {
-       em.persist(client);
-       em.flush();
-       return client.getClientid();
+        em.persist(client);
+        em.flush();
+        return client.getClientid();
     }
 
     @Override
@@ -69,4 +73,9 @@ public class ClientRepositoryImpl implements ClientRepository {
             client = em.merge(client);
         } em.remove(client);
     }
+    
+    @Override
+    public int getMaxId(){
+        return (Integer) em.createNativeQuery("select max(clientid) from j200.clients;").getSingleResult();
+    } 
 }

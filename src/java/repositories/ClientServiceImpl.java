@@ -52,4 +52,9 @@ public class ClientServiceImpl implements ClientService {
     public void deleteClient(Clients client) {
         repo.deleteClient(client);
     }
+
+    @Override
+    public int getMaxId() {
+        return repo.getMaxId();
+    }
 }

@@ -12,7 +12,7 @@ public interface AdressRepository {
     
     List<Adresses> findByClientId(Integer clientid);
     
-    Adresses findAdressById(Integer adressid);
+    Adresses findAdressById(int adressid);
     
     Integer saveAdress(Adresses adress);
     

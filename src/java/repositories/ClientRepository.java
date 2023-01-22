@@ -26,4 +26,6 @@ public interface ClientRepository {
     void updateClient(Clients client);
     
     void deleteClient(Clients client);
+    
+    int getMaxId();
 }

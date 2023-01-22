@@ -35,7 +35,8 @@ public class Adresses implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @NotNull
     @Basic(optional = false)
     @Column(name = "adressid")
     private Integer adressid;
@@ -56,13 +57,21 @@ public class Adresses implements Serializable {
     @Column(name = "locationadress", length = 200)
     private String locationadress;
     @JoinColumn(name = "clientid", referencedColumnName = "clientid")
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Clients clientid;
 
     public Adresses() {
     }
 
     public Adresses(String ip, String mac, String model, String locationadress) {  
+        this.ip = ip;
+        this.mac = mac;
+        this.model = model;
+        this.locationadress = locationadress;
+    }
+    
+    public Adresses(Integer adressid, String ip, String mac, String model, String locationadress) {
+        this.adressid = adressid;
         this.ip = ip;
         this.mac = mac;
         this.model = model;

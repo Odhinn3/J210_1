@@ -26,5 +26,7 @@ public interface ClientService {
     void updateClient(Clients client);
     
     void deleteClient(Clients client);
+    
+    int getMaxId();
 
 }

@@ -23,8 +23,17 @@ public class AdressRepositoryImpl implements AdressRepository {
     }
     
     @Override
-    public Adresses findAdressById(Integer adressid) {
-        return em.find(Adresses.class, adressid);
+    public Adresses findAdressById(int adressid) {
+        Adresses adress = new Adresses();
+        System.out.println("new adress is created");
+        adress = em.find(Adresses.class, adressid);
+        if (adress!= null){
+            System.out.println("new adress is not null");
+            return adress;
+        } else {
+            System.out.println("new adress is null");
+            return null;
+        }
     }
 
     @Override

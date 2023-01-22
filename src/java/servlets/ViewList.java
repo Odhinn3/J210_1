@@ -4,6 +4,7 @@ package servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.ejb.EJB;
@@ -49,9 +50,9 @@ public class ViewList extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         List<Clients> clients = clientService.findAllClients();
-        parser.createXmlFile(clients);
+//        parser.createXmlFile(clients);
+//        parser.readDomXml();
         String text = request.getParameter("search");
-        System.out.println(text);
         clients = filterList(clientService.findAllClients(), text);
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
@@ -97,14 +98,21 @@ public class ViewList extends HttpServlet {
                 for(Clients client : clients){
                     Integer id = client.getClientid();
                     SimpleDateFormat sdf = new SimpleDateFormat();
+                    int size = client.getAdressesList().size();
+                    int rowspan = 0;
+                    if(size!=0){
+                        rowspan = size;
+                    } else {
+                        rowspan = 1;
+                    }
                     out.println("<tr>");
-                    out.println("<td rowspan=" + client.getAdressesList().size() + ">" +  "<a href=\"http://localhost:8080/J200_Lab1/createadress?id=" + id + "\">Create adress</a>" + "</td>");
-                    out.println("<td rowspan=" + client.getAdressesList().size() + ">" +  "<a href=\"http://localhost:8080/J200_Lab1/update?id=" + id + "\">Update</a>" + "</td>");
-                    out.println("<td rowspan=" + client.getAdressesList().size() + ">" +  "<a href=\"http://localhost:8080/J200_Lab1/delete?id=" + id + "\">Delete</a>" + "</td>");
-                    out.println("<td rowspan=" + client.getAdressesList().size() + ">" + id + "</td>");
-                    out.println("<td rowspan=" + client.getAdressesList().size() + ">" + client.getClientname() + "</td>");
-                    out.println("<td rowspan=" + client.getAdressesList().size() + ">" + client.getClienttype() + "</td>");
-                    out.println("<td rowspan=" + client.getAdressesList().size() + ">" + sdf.format(client.getRegdate()) + "</td>");
+                    out.println("<td rowspan=" + rowspan + ">" +  "<a href=\"http://localhost:8080/J200_Lab1/createadress?id=" + id + "\">Create adress</a>" + "</td>");
+                    out.println("<td rowspan=" + rowspan + ">" +  "<a href=\"http://localhost:8080/J200_Lab1/update?id=" + id + "\">Update</a>" + "</td>");
+                    out.println("<td rowspan=" + rowspan + ">" +  "<a href=\"http://localhost:8080/J200_Lab1/delete?id=" + id + "\">Delete</a>" + "</td>");
+                    out.println("<td rowspan=" + rowspan + ">" + id + "</td>");
+                    out.println("<td rowspan=" + rowspan + ">" + client.getClientname() + "</td>");
+                    out.println("<td rowspan=" + rowspan + ">" + client.getClienttype() + "</td>");
+                    out.println("<td rowspan=" + rowspan + ">" + sdf.format(client.getRegdate()) + "</td>");
                     if(!client.getAdressesList().isEmpty()){
                         for(Adresses adress : client.getAdressesList()){
                             int adressid = adress.getAdressid();
@@ -119,7 +127,9 @@ public class ViewList extends HttpServlet {
                         } 
                     } else {
                         out.println("<td colspan = \"6\"></td>");
-                    } out.println("</tr>");
+                        out.println("</tr>");
+                    } 
+                    out.println("</tr>");
                     out.println("</div>");
                 } 
             }

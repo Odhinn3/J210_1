@@ -103,6 +103,9 @@ public class Create extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        
+        int clientid = clientService.getMaxId()+1;
+        System.out.println("new client id = " + clientid);
         String clientname = request.getParameter("clientname");
         String clienttype = request.getParameter("clienttype");
         ZoneId defaultZoneId = ZoneId.systemDefault();
@@ -117,7 +120,7 @@ public class Create extends HttpServlet {
             request.setAttribute("message", message);
             request.getRequestDispatcher("/error").forward(request, response);
         } else {
-            Clients client = new Clients(clientname, clienttype, regdate);
+            Clients client = new Clients(clientid, clientname, clienttype, regdate);
             clientService.saveClient(client);
             response.sendRedirect("http://localhost:8080/J200_Lab1/viewlist");
         }

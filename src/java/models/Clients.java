@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.QueryHint;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,7 +38,8 @@ public class Clients implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @NotNull
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "clientid")
     private Integer clientid;
@@ -61,6 +61,13 @@ public class Clients implements Serializable {
     }
 
     public Clients(String clientname, String clienttype, Date regdate) {
+        this.clientname = clientname;
+        this.clienttype = clienttype;
+        this.regdate = regdate;
+    }
+    
+    public Clients(Integer clientid, String clientname, String clienttype, Date regdate) {
+        this.clientid = clientid;
         this.clientname = clientname;
         this.clienttype = clienttype;
         this.regdate = regdate;
