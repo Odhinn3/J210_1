@@ -27,7 +27,6 @@ public class Create extends HttpServlet {
     @EJB
     ClientService clientService;
 
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
